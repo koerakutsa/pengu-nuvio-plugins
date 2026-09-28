@@ -1,6 +1,6 @@
 {
   "name": "PenguStream Ultra Plugins",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "scrapers": [
     {
       "id": "vidzee",
@@ -29,14 +29,14 @@
     {
       "id": "videasy",
       "name": "Videasy",
-      "description": "Multi-quality HLS (cdn/hdmovie) via speedracelight",
-      "version": "1.0.0",
+      "description": "Fast path: cdn-only multi-quality HLS",
+      "version": "1.0.1",
       "author": "PenguStream",
       "supportedTypes": ["movie", "tv"],
       "filename": "providers/videasy.js",
       "enabled": true,
       "formats": ["m3u8", "mp4"],
-      "contentLanguage": ["en", "hi", "ta", "te"]
+      "contentLanguage": ["en", "hi"]
     },
     {
       "id": "playimdb",
