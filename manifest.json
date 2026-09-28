@@ -1,6 +1,6 @@
 {
   "name": "PenguStream Ultra Plugins",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "scrapers": [
     {
       "id": "vidzee",
@@ -13,6 +13,18 @@
       "enabled": true,
       "formats": ["m3u8"],
       "contentLanguage": ["en", "hi"]
+    },
+    {
+      "id": "vidrock",
+      "name": "Vidrock",
+      "description": "AES-GCM streams — Atlas shares VidZee CDN (ngcorp.dad)",
+      "version": "1.0.0",
+      "author": "PenguStream",
+      "supportedTypes": ["movie", "tv"],
+      "filename": "providers/vidrock.js",
+      "enabled": true,
+      "formats": ["m3u8", "mp4"],
+      "contentLanguage": ["en"]
     },
     {
       "id": "playimdb",
@@ -37,30 +49,6 @@
       "enabled": true,
       "formats": ["mkv", "mp4", "m3u8"],
       "contentLanguage": ["en", "hi"]
-    },
-    {
-      "id": "mp4hydra",
-      "name": "MP4Hydra",
-      "description": "mp4hydra.org (may be offline)",
-      "version": "1.0.1",
-      "author": "PenguStream",
-      "supportedTypes": ["movie", "tv"],
-      "filename": "providers/mp4hydra.js",
-      "enabled": true,
-      "formats": ["mp4", "m3u8"],
-      "contentLanguage": ["en"]
-    },
-    {
-      "id": "debugping",
-      "name": "DebugPing",
-      "description": "Test stream — disable after checking",
-      "version": "1.0.0",
-      "author": "PenguStream",
-      "supportedTypes": ["movie", "tv"],
-      "filename": "providers/debugping.js",
-      "enabled": false,
-      "formats": ["m3u8"],
-      "contentLanguage": ["en"]
     }
   ]
 }
