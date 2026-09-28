@@ -1,6 +1,6 @@
 {
   "name": "PenguStream Ultra Plugins",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "scrapers": [
     {
       "id": "vidzee",
@@ -63,6 +63,30 @@
       "contentLanguage": ["en"]
     },
     {
+      "id": "vidsrcme",
+      "name": "VidSrcME",
+      "description": "WASM decrypt + IP JWT (device-side)",
+      "version": "1.0.0",
+      "author": "PenguStream",
+      "supportedTypes": ["movie", "tv"],
+      "filename": "providers/vidsrcme.js",
+      "enabled": true,
+      "formats": ["m3u8"],
+      "contentLanguage": ["en"]
+    },
+    {
+      "id": "m4uhd",
+      "name": "M4uHD",
+      "description": "9stream AES + VidSrcME fallback",
+      "version": "1.0.0",
+      "author": "PenguStream",
+      "supportedTypes": ["movie", "tv"],
+      "filename": "providers/m4uhd.js",
+      "enabled": true,
+      "formats": ["m3u8"],
+      "contentLanguage": ["en"]
+    },
+    {
       "id": "playimdb",
       "name": "PlayIMDb",
       "description": "Fast path: single vaplayer API call",
@@ -85,6 +109,18 @@
       "enabled": true,
       "formats": ["m3u8"],
       "contentLanguage": ["et", "en"]
+    },
+    {
+      "id": "err-jupiter",
+      "name": "ERR Jupiter",
+      "description": "ERR Jupiter TMDB title match → HLS",
+      "version": "1.0.0",
+      "author": "PenguStream",
+      "supportedTypes": ["movie", "tv"],
+      "filename": "providers/err-jupiter.js",
+      "enabled": true,
+      "formats": ["m3u8", "mp4"],
+      "contentLanguage": ["et"]
     }
   ]
 }
