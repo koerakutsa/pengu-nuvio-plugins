@@ -1,24 +1,24 @@
 {
   "name": "PenguStream Ultra Plugins",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "scrapers": [
     {
-      "id": "movieblast",
-      "name": "MovieBlast",
-      "description": "Direct MKV/HLS via app.cloud-mb.xyz JSON + HMAC",
-      "version": "2.0.0",
+      "id": "debugping",
+      "name": "DebugPing",
+      "description": "Always returns a test HLS — use to verify plugins load",
+      "version": "1.0.0",
       "author": "PenguStream",
       "supportedTypes": ["movie", "tv"],
-      "filename": "providers/movieblast.js",
+      "filename": "providers/debugping.js",
       "enabled": true,
-      "formats": ["mkv", "mp4", "m3u8"],
-      "contentLanguage": ["en", "hi"]
+      "formats": ["m3u8"],
+      "contentLanguage": ["en"]
     },
     {
       "id": "playimdb",
       "name": "PlayIMDb",
       "description": "streamdata.vaplayer.ru — TMDB/IMDb HLS",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": "PenguStream",
       "supportedTypes": ["movie", "tv"],
       "filename": "providers/playimdb.js",
@@ -30,7 +30,7 @@
       "id": "vidzee",
       "name": "VidZee",
       "description": "core.vidzee.wtf multi-server HLS",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": "PenguStream",
       "supportedTypes": ["movie", "tv"],
       "filename": "providers/vidzee.js",
@@ -39,10 +39,22 @@
       "contentLanguage": ["en", "hi"]
     },
     {
+      "id": "movieblast",
+      "name": "MovieBlast",
+      "description": "app.cloud-mb.xyz JSON + HMAC",
+      "version": "2.0.1",
+      "author": "PenguStream",
+      "supportedTypes": ["movie", "tv"],
+      "filename": "providers/movieblast.js",
+      "enabled": true,
+      "formats": ["mkv", "mp4", "m3u8"],
+      "contentLanguage": ["en", "hi"]
+    },
+    {
       "id": "mp4hydra",
       "name": "MP4Hydra",
-      "description": "mp4hydra.org (site may be offline/rebuild)",
-      "version": "1.0.0",
+      "description": "mp4hydra.org (may be offline)",
+      "version": "1.0.1",
       "author": "PenguStream",
       "supportedTypes": ["movie", "tv"],
       "filename": "providers/mp4hydra.js",
