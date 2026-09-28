@@ -1,5 +1,6 @@
 /**
  * VidSrcME — pure-JS decrypt (wasm2js), no WebAssembly required.
+ * Generated for w=5968610
  */
 /** Pure-JS vsdec (wasm2js) — no WebAssembly needed */
 function createVsDec() {
@@ -25,19 +26,17 @@ function createVsDec() {
     }
   }
 function initActiveSegments(imports) {
-  base64DecodeToExistingUint8Array(bufferView, 512, "h6oxZDlac9o1rNddN1LCTE9XbWAS4cWzax/xQHVFmk+xHZ73bqUlxZYafTL26L7U/MllCRHCBIpCy81dgLJYVolNME1WetllKzRPT1EcuTivnpTJJHMvsS/5jDm55/eTA+M=");
-  base64DecodeToExistingUint8Array(bufferView, 0, "v1V9uc1xENt7PW7BiyfOi9WG3WmcFjeGOqxlRyeSHBE=");
-  base64DecodeToExistingUint8Array(bufferView, 2560, "wcfJIG9fpH2+zEwIycB8Som7fnbnC6Bv94R6");
-  base64DecodeToExistingUint8Array(bufferView, 640, "OR/dBI5e9KcEyugYinTVwPHy7uGaCSowh6YkBsGYye5JW1TXhgI13ydGUJrugtG6PeR+iXsqwV3tVKF0CJWCknwpvA==");
-  base64DecodeToExistingUint8Array(bufferView, 2944, "8sc3oILO4MTqctumIRGfetNG+VNqzI+lS6IBCq13hWI8Er9m+cvLorbJejOhNn+x0ULDddqE+GnNXh40v1St1tVnDfmfyFxYkYk3Sz4f1KQaNCMc79bTJuSacdILt2N1hE6w5g9/2xB6200=");
-  base64DecodeToExistingUint8Array(bufferView, 1280, "9u+phbmgSl2U25OEjIyUqMUcNUvKYVPkr5sIndHJkxARNmW7fNsanuHtHnSMx62qGh1ATA7yMWqxKDtpoDMZ1exthKlea4Sckw==");
-  base64DecodeToExistingUint8Array(bufferView, 2688, "W3bX2x2eXF0tBBVsM/7ljIKKZ27DmIXGkBpjEHT8LL5yppsDk7m4OsULPfAQUFCh4jqN9sb/KKu+tek4LDU7ptswxqS/1pHkxFOclsGha2qcE4dV6S+TZdU93OsKW88DWDk=");
-  base64DecodeToExistingUint8Array(bufferView, 3328, "VdzBWCXCooJyx0v3tKseg32QgLRmQ5PTCchZCRRiKXuk+qeUPEoqkBq6ei6Uj5UNE0+U5Qyj8hxZvCI=");
-  base64DecodeToExistingUint8Array(bufferView, 3456, "XVinzztht+vXg/4td0cUV/Es5ZY=");
-  base64DecodeToExistingUint8Array(bufferView, 2304, "dvk1LEPtAZKOL7w3YjAI/z0ZzqHvlXsMfWB9gQE9SE8=");
-  base64DecodeToExistingUint8Array(bufferView, 1024, "IA8nXwUdI488HGTSNqmQ+CVkEOzpa7Z0C75WDoMAhQ8kkUK/o4BqKmKXiRP85Fr4gHWRsRFyd+taHdWJziv2g0wU3BCuxRTp");
-  base64DecodeToExistingUint8Array(bufferView, 2176, "nDp1jTI0ANSpiejEz0seVlHSipEKXKyKdgHbdpX363DwodxZkjnO+rDwzTz/iJW4EYTipftszqhSIMSXMl3cVjuvF5E/cNn+5Gy4KfvZZbKeKQ0NVe8f7dLID8FqLn0LGpz+tc6IrwHV");
-  base64DecodeToExistingUint8Array(bufferView, 3200, "rjamV4Pq37dZfz3614yQ3w1+u5jdsU1UImeE54MC7LKPUrQw6eALlynVlWbbSIwVOKHCWWFc7ymeX80BhnWwveAw5VI1ioFoFfQ119rbuUfr8lzkz04GyXVRzbKH");
+  base64DecodeToExistingUint8Array(bufferView, 512, "E2q1wgQzM85K8grEiRzkPJuTxddt73K2jlzaGkRt");
+  base64DecodeToExistingUint8Array(bufferView, 0, "sCKjrofv+2N0c7hry9YHuIWeOXmzUIrmb5EBSErdAYQ=");
+  base64DecodeToExistingUint8Array(bufferView, 3840, "F1zoIlYKz1SMO/vn++yX+jXQF36OMU79LF1H05f9KlAeNg0sNYiy44w=");
+  base64DecodeToExistingUint8Array(bufferView, 1024, "4IWQhge7Dg+ENStfnRBsomzxh3lA0/rIG54nmM5g1ftNxk6yRVZSAu8RaBYdJDjGYa1vhQ176BK3gwYN0oMf93V6S9KBB0awVrRYPQc+nxljXdBH6D+3S7VLhkQgrcJxUv+F2nmOya0=");
+  base64DecodeToExistingUint8Array(bufferView, 3968, "tyjjFXXL3AoGizStt1sjkZUbeeRreoc8cd/sQiIj8TSvktgn9iTFeuEv");
+  base64DecodeToExistingUint8Array(bufferView, 1408, "rsl86GZGIf1Qcc17fqeHtuFDqK30XzxhsjrRBP3WRFGgvOIjG38dHgOKCbG5");
+  base64DecodeToExistingUint8Array(bufferView, 3328, "VG8/S1ST6l1W31XqcjKfE1VHZQosAhyCPp0oE72OhY6Zjxbt9IPcneWqW340mGxQv0lgLwnH3IikwTUOlak8UkRoG41Xk67ovPG1Vw==");
+  base64DecodeToExistingUint8Array(bufferView, 1664, "7u3VWkbvQLTfO2wDybWBJ9sIIDDt/ceFmRmCZJ3NJ9p3L8ikAVGs0hY4yvutzrR0AHwZFP5R/Z2PHf0yxJZlpiTfqeXy8jbBEH37FU5OCefO0TMoBig7DwE50/8=");
+  base64DecodeToExistingUint8Array(bufferView, 3200, "owgwhmP/a+yBKXqYXzxkkdzpTMtDdaE6Unf4o4St4MQ=");
+  base64DecodeToExistingUint8Array(bufferView, 2432, "2ZJeFw08tBG9Bw+Ri90+hfvPoH840vFBpHKtS4G0QqIHKEj5M7mYcwj0EtBN/E1/IAgnEax0h5BW2gHPQlgggyUjNbZbsg7XVhRtXPh9OHgcxv+tYVhx180WXv+6MQ==");
+  base64DecodeToExistingUint8Array(bufferView, 2688, "2owWrDrOKdCt9GDJ67L6W2jnmMm9RmghmKbC2leukngwiFUJsl4Xj1urJz89yQY9ZVM6FxURpZVJGa6SsKy+eq88ouAuwg3TlRsEC3qIsoWvpeywXA==");
 }
 function asmFunc(imports) {
  var buffer = new ArrayBuffer(262144);
@@ -63,15 +62,15 @@ function asmFunc(imports) {
  function $0($0_1) {
   $0_1 = $0_1 | 0;
   var $2_1 = 0, $1_1 = 0, wasm2js_i32$0 = 0, wasm2js_i32$1 = 0;
-  $2_1 = 275087470;
+  $2_1 = 798752073;
   block : {
    label : while (1) {
-    if ($1_1 >>> 0 >= 53 >>> 0) {
+    if ($1_1 >>> 0 >= 48 >>> 0) {
      break block
     }
-    $2_1 = (__wasm_rotl_i32($2_1 | 0, 2 | 0) | 0) ^ ($1_1 + $0_1 | 0) | 0;
-    $2_1 = Math_imul($2_1, 3) + 445411402 | 0;
-    (wasm2js_i32$0 = 420 + ($1_1 & 63 | 0) | 0, wasm2js_i32$1 = __wasm_rotr_i32($2_1 | 0, 27 | 0) | 0), HEAP8[wasm2js_i32$0 >> 0] = wasm2js_i32$1;
+    $2_1 = (__wasm_rotl_i32($2_1 | 0, 16 | 0) | 0) ^ ($1_1 + $0_1 | 0) | 0;
+    $2_1 = Math_imul($2_1, 3) + 125233392 | 0;
+    (wasm2js_i32$0 = 196 + ($1_1 & 63 | 0) | 0, wasm2js_i32$1 = __wasm_rotr_i32($2_1 | 0, 31 | 0) | 0), HEAP8[wasm2js_i32$0 >> 0] = wasm2js_i32$1;
     $1_1 = $1_1 + 1 | 0;
     continue label;
    };
@@ -82,15 +81,15 @@ function asmFunc(imports) {
  function $1($0_1) {
   $0_1 = $0_1 | 0;
   var $2_1 = 0, $1_1 = 0, wasm2js_i32$0 = 0, wasm2js_i32$1 = 0;
-  $2_1 = 1599619326;
+  $2_1 = 288591991;
   block : {
    label : while (1) {
-    if ($1_1 >>> 0 >= 35 >>> 0) {
+    if ($1_1 >>> 0 >= 27 >>> 0) {
      break block
     }
-    $2_1 = (__wasm_rotl_i32($2_1 | 0, 20 | 0) | 0) ^ ($1_1 + $0_1 | 0) | 0;
-    $2_1 = Math_imul($2_1, 3) + 324071675 | 0;
-    (wasm2js_i32$0 = 468 + ($1_1 & 63 | 0) | 0, wasm2js_i32$1 = __wasm_rotr_i32($2_1 | 0, 1 | 0) | 0), HEAP8[wasm2js_i32$0 >> 0] = wasm2js_i32$1;
+    $2_1 = (__wasm_rotl_i32($2_1 | 0, 6 | 0) | 0) ^ ($1_1 + $0_1 | 0) | 0;
+    $2_1 = Math_imul($2_1, 3) + 741374528 | 0;
+    (wasm2js_i32$0 = 300 + ($1_1 & 63 | 0) | 0, wasm2js_i32$1 = __wasm_rotr_i32($2_1 | 0, 13 | 0) | 0), HEAP8[wasm2js_i32$0 >> 0] = wasm2js_i32$1;
     $1_1 = $1_1 + 1 | 0;
     continue label;
    };
@@ -101,15 +100,15 @@ function asmFunc(imports) {
  function $2($0_1) {
   $0_1 = $0_1 | 0;
   var $2_1 = 0, $1_1 = 0, wasm2js_i32$0 = 0, wasm2js_i32$1 = 0;
-  $2_1 = 20009075;
+  $2_1 = 1912927367;
   block : {
    label : while (1) {
-    if ($1_1 >>> 0 >= 79 >>> 0) {
+    if ($1_1 >>> 0 >= 65 >>> 0) {
      break block
     }
-    $2_1 = (__wasm_rotl_i32($2_1 | 0, 23 | 0) | 0) ^ ($1_1 + $0_1 | 0) | 0;
-    $2_1 = Math_imul($2_1, 3) + 592143048 | 0;
-    (wasm2js_i32$0 = 368 + ($1_1 & 63 | 0) | 0, wasm2js_i32$1 = __wasm_rotr_i32($2_1 | 0, 4 | 0) | 0), HEAP8[wasm2js_i32$0 >> 0] = wasm2js_i32$1;
+    $2_1 = (__wasm_rotl_i32($2_1 | 0, 28 | 0) | 0) ^ ($1_1 + $0_1 | 0) | 0;
+    $2_1 = Math_imul($2_1, 3) + 1580877934 | 0;
+    (wasm2js_i32$0 = 476 + ($1_1 & 63 | 0) | 0, wasm2js_i32$1 = __wasm_rotr_i32($2_1 | 0, 24 | 0) | 0), HEAP8[wasm2js_i32$0 >> 0] = wasm2js_i32$1;
     $1_1 = $1_1 + 1 | 0;
     continue label;
    };
@@ -125,14 +124,14 @@ function asmFunc(imports) {
   $3_1 = 857760878;
   $4_1 = 2036477234;
   $5_1 = 1797285236;
-  $6 = (HEAP32[0 >> 2] | 0) ^ (HEAP32[2304 >> 2] | 0) | 0;
-  $7 = (HEAP32[4 >> 2] | 0) ^ (HEAP32[2308 >> 2] | 0) | 0;
-  $8 = (HEAP32[8 >> 2] | 0) ^ (HEAP32[2312 >> 2] | 0) | 0;
-  $9 = (HEAP32[12 >> 2] | 0) ^ (HEAP32[2316 >> 2] | 0) | 0;
-  $10 = (HEAP32[16 >> 2] | 0) ^ (HEAP32[2320 >> 2] | 0) | 0;
-  $11 = (HEAP32[20 >> 2] | 0) ^ (HEAP32[2324 >> 2] | 0) | 0;
-  $12 = (HEAP32[24 >> 2] | 0) ^ (HEAP32[2328 >> 2] | 0) | 0;
-  $13 = (HEAP32[28 >> 2] | 0) ^ (HEAP32[2332 >> 2] | 0) | 0;
+  $6 = (HEAP32[0 >> 2] | 0) ^ (HEAP32[3200 >> 2] | 0) | 0;
+  $7 = (HEAP32[4 >> 2] | 0) ^ (HEAP32[3204 >> 2] | 0) | 0;
+  $8 = (HEAP32[8 >> 2] | 0) ^ (HEAP32[3208 >> 2] | 0) | 0;
+  $9 = (HEAP32[12 >> 2] | 0) ^ (HEAP32[3212 >> 2] | 0) | 0;
+  $10 = (HEAP32[16 >> 2] | 0) ^ (HEAP32[3216 >> 2] | 0) | 0;
+  $11 = (HEAP32[20 >> 2] | 0) ^ (HEAP32[3220 >> 2] | 0) | 0;
+  $12 = (HEAP32[24 >> 2] | 0) ^ (HEAP32[3224 >> 2] | 0) | 0;
+  $13 = (HEAP32[28 >> 2] | 0) ^ (HEAP32[3228 >> 2] | 0) | 0;
   $14 = $0_1;
   $15 = HEAP32[32 >> 2] | 0;
   $16 = HEAP32[36 >> 2] | 0;
@@ -781,14 +780,14 @@ function asmFunc(imports) {
   HEAP32[($1_1 + 4 | 0) >> 2] = $3_1 + 857760878 | 0;
   HEAP32[($1_1 + 8 | 0) >> 2] = $4_1 + 2036477234 | 0;
   HEAP32[($1_1 + 12 | 0) >> 2] = $5_1 + 1797285236 | 0;
-  HEAP32[($1_1 + 16 | 0) >> 2] = $6 + ((HEAP32[0 >> 2] | 0) ^ (HEAP32[2304 >> 2] | 0) | 0) | 0;
-  HEAP32[($1_1 + 20 | 0) >> 2] = $7 + ((HEAP32[4 >> 2] | 0) ^ (HEAP32[2308 >> 2] | 0) | 0) | 0;
-  HEAP32[($1_1 + 24 | 0) >> 2] = $8 + ((HEAP32[8 >> 2] | 0) ^ (HEAP32[2312 >> 2] | 0) | 0) | 0;
-  HEAP32[($1_1 + 28 | 0) >> 2] = $9 + ((HEAP32[12 >> 2] | 0) ^ (HEAP32[2316 >> 2] | 0) | 0) | 0;
-  HEAP32[($1_1 + 32 | 0) >> 2] = $10 + ((HEAP32[16 >> 2] | 0) ^ (HEAP32[2320 >> 2] | 0) | 0) | 0;
-  HEAP32[($1_1 + 36 | 0) >> 2] = $11 + ((HEAP32[20 >> 2] | 0) ^ (HEAP32[2324 >> 2] | 0) | 0) | 0;
-  HEAP32[($1_1 + 40 | 0) >> 2] = $12 + ((HEAP32[24 >> 2] | 0) ^ (HEAP32[2328 >> 2] | 0) | 0) | 0;
-  HEAP32[($1_1 + 44 | 0) >> 2] = $13 + ((HEAP32[28 >> 2] | 0) ^ (HEAP32[2332 >> 2] | 0) | 0) | 0;
+  HEAP32[($1_1 + 16 | 0) >> 2] = $6 + ((HEAP32[0 >> 2] | 0) ^ (HEAP32[3200 >> 2] | 0) | 0) | 0;
+  HEAP32[($1_1 + 20 | 0) >> 2] = $7 + ((HEAP32[4 >> 2] | 0) ^ (HEAP32[3204 >> 2] | 0) | 0) | 0;
+  HEAP32[($1_1 + 24 | 0) >> 2] = $8 + ((HEAP32[8 >> 2] | 0) ^ (HEAP32[3208 >> 2] | 0) | 0) | 0;
+  HEAP32[($1_1 + 28 | 0) >> 2] = $9 + ((HEAP32[12 >> 2] | 0) ^ (HEAP32[3212 >> 2] | 0) | 0) | 0;
+  HEAP32[($1_1 + 32 | 0) >> 2] = $10 + ((HEAP32[16 >> 2] | 0) ^ (HEAP32[3216 >> 2] | 0) | 0) | 0;
+  HEAP32[($1_1 + 36 | 0) >> 2] = $11 + ((HEAP32[20 >> 2] | 0) ^ (HEAP32[3220 >> 2] | 0) | 0) | 0;
+  HEAP32[($1_1 + 40 | 0) >> 2] = $12 + ((HEAP32[24 >> 2] | 0) ^ (HEAP32[3224 >> 2] | 0) | 0) | 0;
+  HEAP32[($1_1 + 44 | 0) >> 2] = $13 + ((HEAP32[28 >> 2] | 0) ^ (HEAP32[3228 >> 2] | 0) | 0) | 0;
   HEAP32[($1_1 + 48 | 0) >> 2] = $14 + $0_1 | 0;
   HEAP32[($1_1 + 52 | 0) >> 2] = $15 + (HEAP32[32 >> 2] | 0) | 0;
   HEAP32[($1_1 + 56 | 0) >> 2] = $16 + (HEAP32[36 >> 2] | 0) | 0;
@@ -907,9 +906,9 @@ function asmFunc(imports) {
     
    }
   }), 
-  "info": $0, 
-  "ping": $1, 
-  "calc": $2, 
+  "calc": $0, 
+  "info": $1, 
+  "ping": $2, 
   "alloc": $4, 
   "decrypt": $5
  };
@@ -927,7 +926,6 @@ var retasmFunc = asmFunc({
 return retasmFunc;
 }
 
-
 var DATA_API = 'https://data.vidsrcme.ru/api.php';
 var UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36';
 var REFERER = 'https://cloudorchestranova.com/';
@@ -942,9 +940,8 @@ var STREAM_HEADERS = {
 var vsDecSingleton = null;
 function getVsDec() {
   if (!vsDecSingleton) {
-    try {
-      vsDecSingleton = createVsDec();
-    } catch (e) {
+    try { vsDecSingleton = createVsDec(); }
+    catch (e) {
       console.log('[VidSrcME] createVsDec fail: ' + (e && e.message ? e.message : e));
       vsDecSingleton = null;
     }
@@ -995,14 +992,8 @@ function decryptStreamUrls(encB64) {
       return [];
     }
     var text = decodeUtf8(new Uint8Array(mem, ptr + 12, outLen));
-    return text
-      .split('\n')
-      .map(function (s) {
-        return String(s).trim();
-      })
-      .filter(function (s) {
-        return /^https?:\/\//i.test(s);
-      });
+    return text.split('\n').map(function (s) { return String(s).trim(); })
+      .filter(function (s) { return /^https?:\/\//i.test(s); });
   } catch (err) {
     console.log('[VidSrcME] decrypt err: ' + (err && err.message ? err.message : err));
     return [];
@@ -1012,33 +1003,21 @@ function decryptStreamUrls(encB64) {
 function fetchHostToken(origin) {
   if (!origin) return Promise.resolve('');
   return fetch(origin + '/generate.php', {
-    headers: {
-      'User-Agent': UA,
-      Referer: REFERER,
-      Origin: ORIGIN,
-      Accept: 'text/plain,*/*'
+    headers: { 'User-Agent': UA, Referer: REFERER, Origin: ORIGIN, Accept: 'text/plain,*/*' }
+  }).then(function (res) {
+    if (!res || !res.ok) return '';
+    return res.text();
+  }).then(function (text) {
+    text = String(text || '').trim();
+    if (!text || text.charAt(0) === '<') return '';
+    if (text.charAt(0) === '{') {
+      try {
+        var j = JSON.parse(text);
+        return String(j.token || j.data || j.string || j.result || '');
+      } catch (e) { return ''; }
     }
-  })
-    .then(function (res) {
-      if (!res || !res.ok) return '';
-      return res.text();
-    })
-    .then(function (text) {
-      text = String(text || '').trim();
-      if (!text || text.charAt(0) === '<') return '';
-      if (text.charAt(0) === '{') {
-        try {
-          var j = JSON.parse(text);
-          return String(j.token || j.data || j.string || j.result || '');
-        } catch (e) {
-          return '';
-        }
-      }
-      return text;
-    })
-    .catch(function () {
-      return '';
-    });
+    return text;
+  }).catch(function () { return ''; });
 }
 
 function getStreams(tmdbId, mediaType, seasonNum, episodeNum) {
@@ -1049,91 +1028,67 @@ function getStreams(tmdbId, mediaType, seasonNum, episodeNum) {
     var id = String(tmdbId || '').replace(/^tmdb:/i, '').trim();
     if (!id) return Promise.resolve([]);
 
-    var qs =
-      'type=' +
-      (isTv ? 'tv' : 'movie') +
-      '&' +
+    var qs = 'type=' + (isTv ? 'tv' : 'movie') + '&' +
       (/^tt\d+$/i.test(id) ? 'imdb=' + encodeURIComponent(id) : 'tmdb=' + encodeURIComponent(id));
     if (isTv) {
-      qs +=
-        '&season=' +
-        encodeURIComponent(String(Number(seasonNum) || 1)) +
-        '&episode=' +
-        encodeURIComponent(String(Number(episodeNum) || 1));
+      qs += '&season=' + encodeURIComponent(String(Number(seasonNum) || 1)) +
+        '&episode=' + encodeURIComponent(String(Number(episodeNum) || 1));
     }
     qs += '&stream_urls';
 
     return fetch(DATA_API + '?' + qs, {
-      headers: {
-        'User-Agent': UA,
-        Accept: 'application/json',
-        Referer: REFERER,
-        Origin: ORIGIN
+      headers: { 'User-Agent': UA, Accept: 'application/json', Referer: REFERER, Origin: ORIGIN }
+    }).then(function (res) {
+      if (!res || !res.ok) {
+        console.log('[VidSrcME] api HTTP ' + (res && res.status));
+        return null;
       }
-    })
-      .then(function (res) {
-        if (!res || !res.ok) {
-          console.log('[VidSrcME] api HTTP ' + (res && res.status));
-          return null;
-        }
-        return res.json();
-      })
-      .then(function (json) {
-        if (!json || String(json.status_code || '') !== '200' || !json.data) {
-          console.log('[VidSrcME] no data');
-          return [];
-        }
-        var raw = json.data.stream_urls;
-        var urls = [];
-        if (Array.isArray(raw)) {
-          urls = raw.filter(function (u) {
-            return typeof u === 'string' && /^https?:\/\//i.test(u);
-          });
-        } else if (typeof raw === 'string' && raw.length > 8) {
-          urls = decryptStreamUrls(raw);
-        }
-        if (!urls.length) {
-          console.log('[VidSrcME] empty urls');
-          return [];
-        }
-
-        var origins = {};
-        for (var i = 0; i < urls.length; i++) origins[originOf(urls[i])] = true;
-        var originList = Object.keys(origins);
-
-        return Promise.all(
-          originList.map(function (o) {
-            return fetchHostToken(o).then(function (t) {
-              return { origin: o, token: t || '' };
-            });
-          })
-        ).then(function (pairs) {
-          var tokenMap = {};
-          for (var j = 0; j < pairs.length; j++) {
-            tokenMap[pairs[j].origin] = pairs[j].token;
-          }
-          var streams = [];
-          for (var k = 0; k < urls.length; k++) {
-            var o = originOf(urls[k]);
-            streams.push({
-              name: 'VidSrcME · S' + (k + 1),
-              title: (json.data.title || 'VidSrcME') + ' · S' + (k + 1),
-              url: applyToken(urls[k], tokenMap[o]),
-              quality: '1080p',
-              size: 'Unknown',
-              headers: STREAM_HEADERS,
-              provider: 'vidsrcme',
-              sourceType: 'hls'
-            });
-          }
-          console.log('[VidSrcME] → ' + streams.length);
-          return streams;
-        });
-      })
-      .catch(function (err) {
-        console.log('[VidSrcME] error: ' + (err && err.message ? err.message : err));
+      return res.json();
+    }).then(function (json) {
+      if (!json || String(json.status_code || '') !== '200' || !json.data) {
+        console.log('[VidSrcME] no data');
         return [];
+      }
+      var raw = json.data.stream_urls;
+      var urls = [];
+      if (Array.isArray(raw)) {
+        urls = raw.filter(function (u) { return typeof u === 'string' && /^https?:\/\//i.test(u); });
+      } else if (typeof raw === 'string' && raw.length > 8) {
+        urls = decryptStreamUrls(raw);
+      }
+      if (!urls.length) {
+        console.log('[VidSrcME] empty urls');
+        return [];
+      }
+      var origins = {};
+      for (var i = 0; i < urls.length; i++) origins[originOf(urls[i])] = true;
+      var originList = Object.keys(origins);
+      return Promise.all(originList.map(function (o) {
+        return fetchHostToken(o).then(function (t) { return { origin: o, token: t || '' }; });
+      })).then(function (pairs) {
+        var tokenMap = {};
+        for (var j = 0; j < pairs.length; j++) tokenMap[pairs[j].origin] = pairs[j].token;
+        var streams = [];
+        for (var k = 0; k < urls.length; k++) {
+          var o = originOf(urls[k]);
+          streams.push({
+            name: 'VidSrcME · S' + (k + 1),
+            title: (json.data.title || 'VidSrcME') + ' · S' + (k + 1),
+            url: applyToken(urls[k], tokenMap[o]),
+            quality: '1080p',
+            size: 'Unknown',
+            headers: STREAM_HEADERS,
+            provider: 'vidsrcme',
+            sourceType: 'hls'
+          });
+        }
+        console.log('[VidSrcME] → ' + streams.length);
+        return streams;
       });
+    }).catch(function (err) {
+      console.log('[VidSrcME] error: ' + (err && err.message ? err.message : err));
+      return [];
+    });
   } catch (err) {
     console.log('[VidSrcME] sync: ' + (err && err.message ? err.message : err));
     return Promise.resolve([]);
@@ -1145,6 +1100,7 @@ if (typeof module !== 'undefined' && module.exports) {
 }
 if (typeof globalThis !== 'undefined') {
   globalThis.getStreams = getStreams;
+  globalThis.__vsReal = getStreams;
 }
 if (typeof global !== 'undefined') {
   global.getStreams = getStreams;
