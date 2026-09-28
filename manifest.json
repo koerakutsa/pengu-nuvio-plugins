@@ -1,6 +1,6 @@
 {
   "name": "PenguStream Ultra Plugins",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "scrapers": [
     {
       "id": "vidzee",
@@ -60,18 +60,6 @@
       "filename": "providers/vidlink.js",
       "enabled": true,
       "formats": ["m3u8", "mp4"],
-      "contentLanguage": ["en"]
-    },
-    {
-      "id": "vidsrcme",
-      "name": "VidSrcME",
-      "description": "Pure-JS decrypt + IP JWT (no WASM)",
-      "version": "1.1.0",
-      "author": "PenguStream",
-      "supportedTypes": ["movie", "tv"],
-      "filename": "providers/vidsrcme.js",
-      "enabled": true,
-      "formats": ["m3u8"],
       "contentLanguage": ["en"]
     },
     {
