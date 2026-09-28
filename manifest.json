@@ -1,6 +1,6 @@
 {
   "name": "PenguStream Ultra Plugins",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "scrapers": [
     {
       "id": "vidzee",
@@ -66,7 +66,7 @@
       "id": "vidsrcme",
       "name": "VidSrcME",
       "description": "WASM decrypt + IP JWT (device-side)",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": "PenguStream",
       "supportedTypes": ["movie", "tv"],
       "filename": "providers/vidsrcme.js",
@@ -77,8 +77,8 @@
     {
       "id": "m4uhd",
       "name": "M4uHD",
-      "description": "9stream AES + VidSrcME fallback",
-      "version": "1.0.0",
+      "description": "VidSrcME pipeline (WASM)",
+      "version": "1.0.1",
       "author": "PenguStream",
       "supportedTypes": ["movie", "tv"],
       "filename": "providers/m4uhd.js",
@@ -114,7 +114,7 @@
       "id": "err-jupiter",
       "name": "ERR Jupiter",
       "description": "ERR Jupiter TMDB title match → HLS",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": "PenguStream",
       "supportedTypes": ["movie", "tv"],
       "filename": "providers/err-jupiter.js",
