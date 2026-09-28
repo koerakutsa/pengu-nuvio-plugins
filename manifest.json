@@ -1,42 +1,30 @@
 {
   "name": "PenguStream Ultra Plugins",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "scrapers": [
-    {
-      "id": "debugping",
-      "name": "DebugPing",
-      "description": "Always returns a test HLS — use to verify plugins load",
-      "version": "1.0.0",
-      "author": "PenguStream",
-      "supportedTypes": ["movie", "tv"],
-      "filename": "providers/debugping.js",
-      "enabled": true,
-      "formats": ["m3u8"],
-      "contentLanguage": ["en"]
-    },
-    {
-      "id": "playimdb",
-      "name": "PlayIMDb",
-      "description": "streamdata.vaplayer.ru — TMDB/IMDb HLS",
-      "version": "1.0.1",
-      "author": "PenguStream",
-      "supportedTypes": ["movie", "tv"],
-      "filename": "providers/playimdb.js",
-      "enabled": true,
-      "formats": ["m3u8", "mp4"],
-      "contentLanguage": ["en", "et"]
-    },
     {
       "id": "vidzee",
       "name": "VidZee",
-      "description": "core.vidzee.wtf multi-server HLS",
-      "version": "1.0.1",
+      "description": "Fast CDN (tik/Hindi priority) via core.vidzee.wtf",
+      "version": "1.0.2",
       "author": "PenguStream",
       "supportedTypes": ["movie", "tv"],
       "filename": "providers/vidzee.js",
       "enabled": true,
       "formats": ["m3u8"],
       "contentLanguage": ["en", "hi"]
+    },
+    {
+      "id": "playimdb",
+      "name": "PlayIMDb",
+      "description": "vaplayer — absolute HLS variants",
+      "version": "1.0.2",
+      "author": "PenguStream",
+      "supportedTypes": ["movie", "tv"],
+      "filename": "providers/playimdb.js",
+      "enabled": true,
+      "formats": ["m3u8", "mp4"],
+      "contentLanguage": ["en", "et"]
     },
     {
       "id": "movieblast",
@@ -60,6 +48,18 @@
       "filename": "providers/mp4hydra.js",
       "enabled": true,
       "formats": ["mp4", "m3u8"],
+      "contentLanguage": ["en"]
+    },
+    {
+      "id": "debugping",
+      "name": "DebugPing",
+      "description": "Test stream — disable after checking",
+      "version": "1.0.0",
+      "author": "PenguStream",
+      "supportedTypes": ["movie", "tv"],
+      "filename": "providers/debugping.js",
+      "enabled": false,
+      "formats": ["m3u8"],
       "contentLanguage": ["en"]
     }
   ]
