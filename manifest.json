@@ -1,6 +1,6 @@
 {
   "name": "PenguStream Ultra Plugins",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "scrapers": [
     {
       "id": "vidzee",
@@ -29,7 +29,7 @@
     {
       "id": "videasy",
       "name": "Videasy",
-      "description": "cdn multi-quality HLS (VidZee-style code)",
+      "description": "cdn multi-quality HLS",
       "version": "1.0.3",
       "author": "PenguStream",
       "supportedTypes": ["movie", "tv"],
@@ -41,8 +41,8 @@
     {
       "id": "playimdb",
       "name": "PlayIMDb",
-      "description": "vaplayer — absolute HLS variants",
-      "version": "1.0.2",
+      "description": "Fast path: single vaplayer API call",
+      "version": "1.1.0",
       "author": "PenguStream",
       "supportedTypes": ["movie", "tv"],
       "filename": "providers/playimdb.js",
