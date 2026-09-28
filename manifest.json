@@ -1,11 +1,11 @@
 {
   "name": "PenguStream Ultra Plugins",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "scrapers": [
     {
       "id": "vidzee",
       "name": "VidZee",
-      "description": "Fast CDN (tik/Hindi priority) via core.vidzee.wtf",
+      "description": "Fast CDN (tik/Hindi priority)",
       "version": "1.0.2",
       "author": "PenguStream",
       "supportedTypes": ["movie", "tv"],
@@ -17,7 +17,7 @@
     {
       "id": "vidrock",
       "name": "Vidrock",
-      "description": "AES-GCM streams — Atlas shares VidZee CDN (ngcorp.dad)",
+      "description": "AES-GCM — Atlas shares VidZee CDN",
       "version": "1.0.0",
       "author": "PenguStream",
       "supportedTypes": ["movie", "tv"],
@@ -25,6 +25,18 @@
       "enabled": true,
       "formats": ["m3u8", "mp4"],
       "contentLanguage": ["en"]
+    },
+    {
+      "id": "videasy",
+      "name": "Videasy",
+      "description": "Multi-quality HLS (cdn/hdmovie) via speedracelight",
+      "version": "1.0.0",
+      "author": "PenguStream",
+      "supportedTypes": ["movie", "tv"],
+      "filename": "providers/videasy.js",
+      "enabled": true,
+      "formats": ["m3u8", "mp4"],
+      "contentLanguage": ["en", "hi", "ta", "te"]
     },
     {
       "id": "playimdb",
@@ -37,18 +49,6 @@
       "enabled": true,
       "formats": ["m3u8", "mp4"],
       "contentLanguage": ["en", "et"]
-    },
-    {
-      "id": "movieblast",
-      "name": "MovieBlast",
-      "description": "app.cloud-mb.xyz JSON + HMAC",
-      "version": "2.0.1",
-      "author": "PenguStream",
-      "supportedTypes": ["movie", "tv"],
-      "filename": "providers/movieblast.js",
-      "enabled": true,
-      "formats": ["mkv", "mp4", "m3u8"],
-      "contentLanguage": ["en", "hi"]
     }
   ]
 }

@@ -1,28 +1,20 @@
 # PenguStream Ultra — Nuvio Plugins
 
-Public plugin repo (Nuvio needs unauthenticated raw GitHub access).
-
 ## Install
 
 ```
 https://raw.githubusercontent.com/koerakutsa/pengu-nuvio-plugins/main/manifest.json
 ```
 
-or
-
-```
-https://raw.githubusercontent.com/koerakutsa/pengu-nuvio-plugins/refs/heads/main/manifest.json
-```
-
-## Providers (v1.1.0)
+## Providers (v1.2.0)
 
 | Provider | Notes |
 |----------|--------|
-| **VidZee** | Fast — TikTok/edge CDN (tik, Hindi) |
-| **Vidrock** | Fast — Atlas often same CDN as VidZee (`ngcorp.dad`) |
-| PlayIMDb | Works, slower CDN |
-| MovieBlast | Variable |
+| **VidZee** | Very fast (tik / Hindi) |
+| **Vidrock** | Very fast (Atlas ≈ VidZee CDN) |
+| **Videasy** | Multi-quality HLS (cdn / hdmovie) — replaces MovieBlast |
+| PlayIMDb | Backup, slower CDN |
 
-MP4Hydra removed (site offline / slow).
+Removed: MP4Hydra, MovieBlast.
 
 Refresh plugins in Nuvio after updates.
