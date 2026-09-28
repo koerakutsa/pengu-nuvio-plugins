@@ -1,6 +1,6 @@
 {
   "name": "PenguStream Ultra Plugins",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "scrapers": [
     {
       "id": "vidzee",
@@ -37,6 +37,30 @@
       "enabled": true,
       "formats": ["m3u8", "mp4"],
       "contentLanguage": ["en", "hi"]
+    },
+    {
+      "id": "vixsrc",
+      "name": "Vixsrc",
+      "description": "Fast API + embed playlist",
+      "version": "1.0.0",
+      "author": "PenguStream",
+      "supportedTypes": ["movie", "tv"],
+      "filename": "providers/vixsrc.js",
+      "enabled": true,
+      "formats": ["m3u8"],
+      "contentLanguage": ["en"]
+    },
+    {
+      "id": "vidlink",
+      "name": "VidLink",
+      "description": "enc-dec + multi quality MP4/HLS",
+      "version": "1.0.0",
+      "author": "PenguStream",
+      "supportedTypes": ["movie", "tv"],
+      "filename": "providers/vidlink.js",
+      "enabled": true,
+      "formats": ["m3u8", "mp4"],
+      "contentLanguage": ["en"]
     },
     {
       "id": "playimdb",
