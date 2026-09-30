@@ -1,6 +1,6 @@
 /**
  * ERR Jupiter / Arhiiv / Lasteekraan — direct err:ID / lasteekraan:ID OR TMDB title match.
- * Promise only.
+ * Promise only. Nested seasonList + season/episode resolve.
  */
 var ERR_API = 'https://services.err.ee';
 var TMDB_KEY = '439c478a771f35c05022f9feabcca01c';
@@ -52,10 +52,14 @@ function scoreTitle(a, b) {
 
 function parseErrId(raw) {
   var s = String(raw || '').trim();
-  var m = s.match(/(?:err-archive|lasteekraan|err):(\d{5,})/i);
+  try {
+    s = decodeURIComponent(s);
+  } catch (e) {}
+  s = s.replace(/\.json$/i, '').trim();
+  var m = s.match(/(?:err-archive|lasteekraan|err):(\d+)/i);
   if (m) return m[1];
   s = s.replace(/^tmdb:/i, '').trim();
-  if (/^\d{6,}$/.test(s)) return s;
+  if (/^\d{5,}$/.test(s)) return s;
   return '';
 }
 
@@ -136,7 +140,49 @@ function pickBest(contents, meta) {
   return '';
 }
 
-function fetchContentStreams(contentId) {
+function collectSeasonEpisodes(seasonList) {
+  var out = [];
+  var items = (seasonList && seasonList.items) || [];
+  for (var si = 0; si < items.length; si++) {
+    var s = items[si];
+    var groups = s.items && s.items.length ? s.items : [s];
+    for (var gi = 0; gi < groups.length; gi++) {
+      var contents = groups[gi].contents || [];
+      for (var ei = 0; ei < contents.length; ei++) {
+        if (contents[ei] && contents[ei].id) out.push(contents[ei]);
+      }
+    }
+  }
+  return out;
+}
+
+function pickEpisodeContentId(seasonList, seasonNum, episodeNum) {
+  var eps = collectSeasonEpisodes(seasonList);
+  if (!eps.length) return '';
+  var wantS = seasonNum ? parseInt(seasonNum, 10) : 0;
+  var wantE = episodeNum ? parseInt(episodeNum, 10) : 0;
+  if (isNaN(wantS)) wantS = 0;
+  if (isNaN(wantE)) wantE = 0;
+  if (wantS > 0 && wantE > 0) {
+    for (var i = 0; i < eps.length; i++) {
+      var c = eps[i];
+      var s = parseInt(c.season, 10) || 0;
+      var e = parseInt(c.episode, 10) || 0;
+      if (s === wantS && e === wantE) return String(c.id);
+    }
+    var ord = 0;
+    for (var j = 0; j < eps.length; j++) {
+      var s2 = parseInt(eps[j].season, 10) || 0;
+      if (wantS && s2 && s2 !== wantS) continue;
+      ord++;
+      if (ord === wantE) return String(eps[j].id);
+    }
+  }
+  if (wantE > 0 && wantE <= eps.length) return String(eps[wantE - 1].id);
+  return String(eps[0].id);
+}
+
+function fetchContentStreams(contentId, seasonNum, episodeNum) {
   return fetch(
     ERR_API +
       '/api/v2/vodContent/getContentPageData?contentId=' +
@@ -155,43 +201,52 @@ function fetchContentStreams(contentId) {
     })
     .then(function (json) {
       var main = json && json.data && json.data.mainContent;
-      if (!main) {
-        console.log('[ERR] no mainContent');
-        return [];
-      }
       var output = [];
-      var medias = main.medias || [];
-      for (var i = 0; i < medias.length; i++) {
-        var media = medias[i];
-        if (media.restrictions && media.restrictions.drm) continue;
-        var src = media.src || {};
-        var candidates = [src.hls, src.hls2, src.hlsNew, src.file];
-        for (var h = 0; h < candidates.length; h++) {
-          var u = mediaUrl(candidates[h]);
-          if (!u) continue;
-          output.push({
-            name: 'ERR Jupiter',
-            title: (main.heading || 'ERR') + ' · HLS',
-            url: u,
-            quality: '1080p',
-            size: 'Unknown',
-            headers: MEDIA_HEADERS,
-            provider: 'err-jupiter',
-            sourceType: u.toLowerCase().indexOf('.m3u8') >= 0 ? 'hls' : 'video'
-          });
-        }
-      }
-      if (!output.length && json.data && json.data.seasonList && json.data.seasonList.items) {
-        var seasons = json.data.seasonList.items;
-        for (var si = 0; si < seasons.length && !output.length; si++) {
-          var eps = seasons[si].contents || [];
-          for (var ei = 0; ei < eps.length; ei++) {
-            var ep = eps[ei];
-            if (!ep || !ep.id) continue;
-            return fetchContentStreams(String(ep.id));
+      if (main) {
+        var medias = main.medias || [];
+        for (var i = 0; i < medias.length; i++) {
+          var media = medias[i];
+          if (media.restrictions && media.restrictions.drm) continue;
+          var src = media.src || {};
+          var candidates = [src.hls, src.hls2, src.hlsNew, src.file];
+          for (var h = 0; h < candidates.length; h++) {
+            var u = mediaUrl(candidates[h]);
+            if (!u) continue;
+            output.push({
+              name: 'ERR Jupiter',
+              title: (main.heading || 'ERR') + ' · HLS',
+              url: u,
+              quality: '1080p',
+              size: 'Unknown',
+              headers: MEDIA_HEADERS,
+              provider: 'err-jupiter',
+              sourceType: u.toLowerCase().indexOf('.m3u8') >= 0 ? 'hls' : 'video'
+            });
           }
         }
       }
+
+      // Parent series: resolve S/E or first nested episode
+      if (!output.length && json && json.data && json.data.seasonList) {
+        var targetId = pickEpisodeContentId(json.data.seasonList, seasonNum, episodeNum);
+        if (targetId && targetId !== String(contentId)) {
+          console.log(
+            '[ERR] resolve episode contentId=' + targetId + ' S' + seasonNum + 'E' + episodeNum
+          );
+          return fetchContentStreams(targetId);
+        }
+        var eps = collectSeasonEpisodes(json.data.seasonList);
+        if (eps.length) {
+          console.log('[ERR] fallback first ep ' + eps[0].id);
+          return fetchContentStreams(String(eps[0].id));
+        }
+      }
+
+      if (!main && !output.length) {
+        console.log('[ERR] no mainContent');
+        return [];
+      }
+
       var seen = {};
       var uniq = [];
       for (var j = 0; j < output.length; j++) {
@@ -199,7 +254,7 @@ function fetchContentStreams(contentId) {
         seen[output[j].url] = true;
         uniq.push(output[j]);
       }
-      console.log('[ERR] → ' + uniq.length + ' streams');
+      console.log('[ERR] → ' + uniq.length + ' streams id=' + contentId);
       return uniq;
     })
     .catch(function (err) {
@@ -217,7 +272,7 @@ function getStreams(tmdbId, mediaType, seasonNum, episodeNum) {
 
     if (errId) {
       console.log('[ERR] direct contentId=' + errId);
-      return fetchContentStreams(errId);
+      return fetchContentStreams(errId, seasonNum, episodeNum);
     }
 
     var id = String(tmdbId || '')
@@ -240,10 +295,10 @@ function getStreams(tmdbId, mediaType, seasonNum, episodeNum) {
           if (!contentId && meta.original && meta.original !== meta.title) {
             return searchErr(meta.original, isTv).then(function (c2) {
               contentId = pickBest(c2, meta);
-              return contentId ? fetchContentStreams(contentId) : [];
+              return contentId ? fetchContentStreams(contentId, seasonNum, episodeNum) : [];
             });
           }
-          return contentId ? fetchContentStreams(contentId) : [];
+          return contentId ? fetchContentStreams(contentId, seasonNum, episodeNum) : [];
         });
       })
       .catch(function (err) {
