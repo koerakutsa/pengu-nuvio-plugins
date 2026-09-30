@@ -1,5 +1,5 @@
 /**
- * DuoPlay — duoplay:ID, bare numeric ID, or TMDB title match.
+ * DuoPlay — duoplay:ID, duoplay:ID:ep:N, bare numeric, or TMDB title match.
  */
 var API = 'https://tigu.kanal2.ee/duoplay/ee/et';
 var SITE = 'https://duoplay.ee';
@@ -9,7 +9,11 @@ var JSON_HEADERS = { Accept: 'application/json', 'User-Agent': UA, Referer: SITE
 var HTML_HEADERS = { Accept: 'text/html,application/xhtml+xml', 'User-Agent': UA, Referer: SITE + '/' };
 
 function decodeHtml(value) {
-  return String(value || '').replace(/"/g, '"').replace(/&/g, '&').replace(/&#039;|'/g, "'").replace(/\\\//g, '/');
+  return String(value || '')
+    .replace(/"/g, '"')
+    .replace(/&/g, '&')
+    .replace(/&#039;|'/g, "'")
+    .replace(/\\\//g, '/');
 }
 function normTitle(s) {
   return String(s || '').toLowerCase().replace(/["'«»„“']/g, '').replace(/\s+/g, ' ').trim();
@@ -99,8 +103,10 @@ function findDuoId(meta, isTv) {
   }
   function tryListPages() {
     var path = isTv ? '/telecasts' : '/telecasts/movies';
-    var jobs = [1,2,3,4,5].map(function (p) {
-      return fetchJson(API + path + '?page=' + p + '&limit=100').then(function (d) { return (d && d.data) || []; });
+    var jobs = [1, 2, 3, 4, 5].map(function (p) {
+      return fetchJson(API + path + '?page=' + p + '&limit=100').then(function (d) {
+        return (d && d.data) || [];
+      });
     });
     return Promise.all(jobs).then(function (lists) {
       var best = null, bestScore = -1;
@@ -119,50 +125,79 @@ function findDuoId(meta, isTv) {
 }
 function registerSession(manifestUrl) {
   return fetch('https://sts.euddn.net/session/register', {
-    headers: { Accept: 'application/json, text/plain, */*', 'User-Agent': UA, Referer: SITE + '/', Origin: SITE, 'X-Original-URI': manifestUrl }
-  }).then(function (res) {
-    if (!res) return null;
-    return res.json().catch(function () { return null; });
-  }).then(function (data) {
-    var session = data && data.session ? String(data.session) : '';
-    if (/^[a-f0-9]{64}$/i.test(session)) return manifestUrl + (manifestUrl.indexOf('?') >= 0 ? '&' : '?') + 's=' + session;
-    return null;
-  }).catch(function () { return null; });
+    headers: {
+      Accept: 'application/json, text/plain, */*',
+      'User-Agent': UA,
+      Referer: SITE + '/',
+      Origin: SITE,
+      'X-Original-URI': manifestUrl
+    }
+  })
+    .then(function (res) {
+      if (!res) return null;
+      return res.json().catch(function () {
+        return null;
+      });
+    })
+    .then(function (data) {
+      var session = data && data.session ? String(data.session) : '';
+      if (/^[a-f0-9]{64}$/i.test(session)) {
+        return manifestUrl + (manifestUrl.indexOf('?') >= 0 ? '&' : '?') + 's=' + session;
+      }
+      return null;
+    })
+    .catch(function () {
+      return null;
+    });
 }
-function streamFromDuoId(duoId) {
-  return fetchHtml('/' + duoId).then(function (html) {
-    if (!html) { console.log('[DuoPlay] empty HTML id=' + duoId); return []; }
+function streamFromDuoId(duoId, epNum) {
+  var path = '/' + duoId;
+  if (epNum && epNum > 0) path += '?ep=' + epNum;
+  return fetchHtml(path).then(function (html) {
+    if (!html) {
+      console.log('[DuoPlay] empty HTML id=' + duoId + ' ep=' + epNum);
+      return [];
+    }
     var manifest = extractStreamUrl(html);
-    if (!manifest) { console.log('[DuoPlay] no m3u8 id=' + duoId); return []; }
+    if (!manifest) {
+      console.log('[DuoPlay] no m3u8 id=' + duoId + ' ep=' + epNum);
+      return [];
+    }
     if (manifest.indexOf('http') !== 0) manifest = 'https://' + manifest.replace(/^\/\//, '');
     return registerSession(manifest).then(function (signed) {
-      return [{
-        name: 'DuoPlay · HLS',
-        title: pageTitle(html) + ' · DuoPlay · EE',
-        url: signed || manifest,
-        quality: '1080p',
-        size: 'Unknown',
-        headers: { 'User-Agent': UA, Referer: SITE + '/', Origin: SITE },
-        provider: 'duoplay',
-        sourceType: 'hls'
-      }];
+      var title = pageTitle(html);
+      if (epNum && epNum > 0) title += ' · E' + epNum;
+      return [
+        {
+          name: 'DuoPlay · HLS',
+          title: title + ' · DuoPlay · EE',
+          url: signed || manifest,
+          quality: '1080p',
+          size: 'Unknown',
+          headers: { 'User-Agent': UA, Referer: SITE + '/', Origin: SITE },
+          provider: 'duoplay',
+          sourceType: 'hls'
+        }
+      ];
     });
   });
 }
 function normalizeRaw(raw) {
   var s = String(raw || '').trim();
-  try { s = decodeURIComponent(s); } catch (e) {}
+  try {
+    s = decodeURIComponent(s);
+  } catch (e) {}
   s = s.replace(/\.json$/i, '').trim();
   return s;
 }
 function parseId(raw) {
   var s = normalizeRaw(raw);
-  var m = s.match(/duoplay:(\d+)/i);
-  if (m) return { kind: 'duo', id: m[1] };
+  var m = s.match(/duoplay:(\d+)(?::ep:(\d+))?/i);
+  if (m) return { kind: 'duo', id: m[1], ep: m[2] ? parseInt(m[2], 10) : 0 };
   s = s.replace(/^(?:tmdb|tt|imdb):/i, '').trim();
-  if (/^\d{1,6}$/.test(s)) return { kind: 'duo-or-tmdb', id: s };
-  if (/^\d+$/.test(s)) return { kind: 'tmdb', id: s };
-  return { kind: 'none', id: '' };
+  if (/^\d{1,6}$/.test(s)) return { kind: 'duo-or-tmdb', id: s, ep: 0 };
+  if (/^\d+$/.test(s)) return { kind: 'tmdb', id: s, ep: 0 };
+  return { kind: 'none', id: '', ep: 0 };
 }
 function getStreams(tmdbId, mediaType, seasonNum, episodeNum) {
   console.log('[DuoPlay] getStreams raw=', tmdbId, mediaType, seasonNum, episodeNum);
@@ -170,43 +205,54 @@ function getStreams(tmdbId, mediaType, seasonNum, episodeNum) {
     mediaType = mediaType || 'movie';
     var isTv = mediaType === 'tv' || mediaType === 'series';
     var parsed = parseId(tmdbId);
-    console.log('[DuoPlay] parsed=', parsed.kind, parsed.id);
+    var epFromArgs = episodeNum ? parseInt(episodeNum, 10) : 0;
+    if (!epFromArgs || isNaN(epFromArgs)) epFromArgs = 0;
+    console.log('[DuoPlay] parsed=', parsed.kind, parsed.id, 'ep=', parsed.ep || epFromArgs);
+
     if (parsed.kind === 'duo') {
-      return streamFromDuoId(parsed.id).catch(function (err) {
+      var ep = parsed.ep || epFromArgs;
+      return streamFromDuoId(parsed.id, ep).catch(function (err) {
         console.log('[DuoPlay] error: ' + (err && err.message ? err.message : err));
         return [];
       });
     }
+
     if (parsed.kind === 'duo-or-tmdb') {
-      return streamFromDuoId(parsed.id).then(function (streams) {
-        if (streams && streams.length) return streams;
-        return getTmdbMeta(parsed.id, isTv).then(function (meta) {
-          if (!meta || !meta.title) return [];
-          return findDuoId(meta, isTv).then(function (duoId) {
-            return duoId ? streamFromDuoId(duoId) : [];
+      return streamFromDuoId(parsed.id, epFromArgs)
+        .then(function (streams) {
+          if (streams && streams.length) return streams;
+          return getTmdbMeta(parsed.id, isTv).then(function (meta) {
+            if (!meta || !meta.title) return [];
+            return findDuoId(meta, isTv).then(function (duoId) {
+              return duoId ? streamFromDuoId(duoId, epFromArgs) : [];
+            });
           });
+        })
+        .catch(function (err) {
+          console.log('[DuoPlay] error: ' + (err && err.message ? err.message : err));
+          return [];
         });
-      }).catch(function (err) {
-        console.log('[DuoPlay] error: ' + (err && err.message ? err.message : err));
-        return [];
-      });
     }
+
     if (parsed.kind !== 'tmdb') {
       console.log('[DuoPlay] skip id');
       return Promise.resolve([]);
     }
-    return getTmdbMeta(parsed.id, isTv).then(function (meta) {
-      if (!meta || !meta.title) {
-        if (parsed.id.length <= 6) return streamFromDuoId(parsed.id);
+
+    return getTmdbMeta(parsed.id, isTv)
+      .then(function (meta) {
+        if (!meta || !meta.title) {
+          if (parsed.id.length <= 6) return streamFromDuoId(parsed.id, epFromArgs);
+          return [];
+        }
+        return findDuoId(meta, isTv).then(function (duoId) {
+          return duoId ? streamFromDuoId(duoId, epFromArgs) : [];
+        });
+      })
+      .catch(function (err) {
+        console.log('[DuoPlay] error: ' + (err && err.message ? err.message : err));
         return [];
-      }
-      return findDuoId(meta, isTv).then(function (duoId) {
-        return duoId ? streamFromDuoId(duoId) : [];
       });
-    }).catch(function (err) {
-      console.log('[DuoPlay] error: ' + (err && err.message ? err.message : err));
-      return [];
-    });
   } catch (err) {
     console.log('[DuoPlay] sync: ' + (err && err.message ? err.message : err));
     return Promise.resolve([]);
