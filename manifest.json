@@ -1,6 +1,6 @@
 {
   "name": "PenguStream Ultra Plugins",
-  "version": "1.5.7",
+  "version": "1.5.8",
   "scrapers": [
     {
       "id": "debugping",
@@ -17,8 +17,8 @@
     {
       "id": "duoplay",
       "name": "DuoPlay",
-      "description": "duoplay:ID / bare ID / TMDB (EE geo)",
-      "version": "1.3.0",
+      "description": "duoplay:ID + episodes (syntax fixed)",
+      "version": "1.3.1",
       "author": "PenguStream",
       "supportedTypes": ["movie", "tv", "series"],
       "filename": "providers/duoplay.js",
