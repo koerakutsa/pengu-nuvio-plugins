@@ -104,7 +104,7 @@ function findDuoId(meta, isTv) {
   function tryListPages() {
     var path = isTv ? '/telecasts' : '/telecasts/movies';
     var jobs = [1, 2, 3, 4, 5].map(function (p) {
-      return fetchJson(API + path + '?page=' + p + '&limit=100').then(function (d) {
+      return fetchJson(API + path + '?page=' + p + '&limit=100).then(function (d) {
         return (d && d.data) || [];
       });
     });
@@ -184,18 +184,28 @@ function streamFromDuoId(duoId, epNum) {
 }
 function normalizeRaw(raw) {
   var s = String(raw || '').trim();
-  try {
-    s = decodeURIComponent(s);
-  } catch (e) {}
+  if (s.indexOf('/') >= 0) {
+    var parts = s.split('/');
+    s = parts[parts.length - 1] || s;
+  }
+  try { s = decodeURIComponent(s); } catch (e) {}
+  try { s = decodeURIComponent(s); } catch (e2) {}
   s = s.replace(/\.json$/i, '').trim();
   return s;
 }
 function parseId(raw) {
   var s = normalizeRaw(raw);
-  var m = s.match(/duoplay:(\d+)(?::ep:(\d+))?/i);
-  if (m) return { kind: 'duo', id: m[1], ep: m[2] ? parseInt(m[2], 10) : 0 };
-  s = s.replace(/^(?:tmdb|tt|imdb):/i, '').trim();
-  if (/^\d{1,6}$/.test(s)) return { kind: 'duo-or-tmdb', id: s, ep: 0 };
+  var m = s.match(/duoplay:(\d+)(?::ep:(\d+)|:(\d+):(\d+)|:(\d+))?/i);
+  if (m) {
+    var ep = 0;
+    if (m[2]) ep = parseInt(m[2], 10);
+    else if (m[4]) ep = parseInt(m[4], 10);
+    else if (m[5]) ep = parseInt(m[5], 10);
+    return { kind: 'duo', id: m[1], ep: ep || 0 };
+  }
+  s = s.replace(/^(?:tmdb(?::(?:tv|movie))?|tt|imdb):/i, '').trim();
+  var m2 = s.match(/^(\d{1,6})(?::(\d+):(\d+))?$/);
+  if (m2) return { kind: 'duo-or-tmdb', id: m2[1], ep: m2[3] ? parseInt(m2[3], 10) : 0 };
   if (/^\d+$/.test(s)) return { kind: 'tmdb', id: s, ep: 0 };
   return { kind: 'none', id: '', ep: 0 };
 }
