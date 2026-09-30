@@ -104,7 +104,7 @@ function findDuoId(meta, isTv) {
   function tryListPages() {
     var path = isTv ? '/telecasts' : '/telecasts/movies';
     var jobs = [1, 2, 3, 4, 5].map(function (p) {
-      return fetchJson(API + path + '?page=' + p + '&limit=100).then(function (d) {
+      return fetchJson(API + path + '?page=' + p + '&limit=100').then(function (d) {
         return (d && d.data) || [];
       });
     });
