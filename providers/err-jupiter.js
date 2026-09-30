@@ -52,13 +52,16 @@ function scoreTitle(a, b) {
 
 function parseErrId(raw) {
   var s = String(raw || '').trim();
-  try {
-    s = decodeURIComponent(s);
-  } catch (e) {}
+  if (s.indexOf('/') >= 0) {
+    var parts = s.split('/');
+    s = parts[parts.length - 1] || s;
+  }
+  try { s = decodeURIComponent(s); } catch (e) {}
+  try { s = decodeURIComponent(s); } catch (e2) {}
   s = s.replace(/\.json$/i, '').trim();
   var m = s.match(/(?:err-archive|lasteekraan|err):(\d+)/i);
   if (m) return m[1];
-  s = s.replace(/^tmdb:/i, '').trim();
+  s = s.replace(/^(?:tmdb(?::(?:tv|movie))?):/i, '').trim();
   if (/^\d{5,}$/.test(s)) return s;
   return '';
 }
@@ -226,7 +229,6 @@ function fetchContentStreams(contentId, seasonNum, episodeNum) {
         }
       }
 
-      // Parent series: resolve S/E or first nested episode
       if (!output.length && json && json.data && json.data.seasonList) {
         var targetId = pickEpisodeContentId(json.data.seasonList, seasonNum, episodeNum);
         if (targetId && targetId !== String(contentId)) {
