@@ -1,6 +1,5 @@
 /**
  * DebugPing — always returns one fake stream that shows the received ID.
- * Use to verify what Nuvio passes into plugins for catalog items.
  */
 function getStreams(tmdbId, mediaType, seasonNum, episodeNum) {
   var label = 'ID=' + String(tmdbId) + ' type=' + String(mediaType) +
