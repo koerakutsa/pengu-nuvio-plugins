@@ -1,6 +1,6 @@
 {
   "name": "PenguStream Ultra Plugins",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "scrapers": [
     {
       "id": "vidzee",
@@ -63,18 +63,6 @@
       "contentLanguage": ["en"]
     },
     {
-      "id": "vidsrcme",
-      "name": "VidSrcME",
-      "description": "Pure-JS decrypt + IP JWT (no WASM)",
-      "version": "1.2.0",
-      "author": "PenguStream",
-      "supportedTypes": ["movie", "tv"],
-      "filename": "providers/vidsrcme.js",
-      "enabled": true,
-      "formats": ["m3u8"],
-      "contentLanguage": ["en"]
-    },
-    {
       "id": "playimdb",
       "name": "PlayIMDb",
       "description": "Fast path: single vaplayer API call",
@@ -89,8 +77,8 @@
     {
       "id": "duoplay",
       "name": "DuoPlay",
-      "description": "Eesti DuoPlay HLS (EE/LT/LV geo)",
-      "version": "1.0.0",
+      "description": "duoplay:ID direct + TMDB match (EE geo)",
+      "version": "1.1.0",
       "author": "PenguStream",
       "supportedTypes": ["movie", "tv"],
       "filename": "providers/duoplay.js",
@@ -101,8 +89,8 @@
     {
       "id": "err-jupiter",
       "name": "ERR Jupiter",
-      "description": "ERR Jupiter TMDB title match → HLS",
-      "version": "1.0.1",
+      "description": "err:/lasteekraan: direct ID + TMDB match",
+      "version": "1.1.0",
       "author": "PenguStream",
       "supportedTypes": ["movie", "tv"],
       "filename": "providers/err-jupiter.js",

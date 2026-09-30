@@ -1,6 +1,6 @@
 /**
- * ERR Jupiter — TMDB title → getVodContents2 → content HLS.
- * Lower match threshold; broader search. Promise only.
+ * ERR Jupiter / Arhiiv / Lasteekraan — direct err:ID / lasteekraan:ID OR TMDB title match.
+ * Promise only.
  */
 var ERR_API = 'https://services.err.ee';
 var TMDB_KEY = '439c478a771f35c05022f9feabcca01c';
@@ -28,7 +28,7 @@ function mediaUrl(value) {
 function norm(s) {
   return String(s || '')
     .toLowerCase()
-    .replace(/["'«»]/g, '')
+    .replace(/["'«»']/g, '')
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -48,6 +48,15 @@ function scoreTitle(a, b) {
     if (a.indexOf(tokens[i]) >= 0) hits++;
   }
   return Math.round((hits / tokens.length) * 70);
+}
+
+function parseErrId(raw) {
+  var s = String(raw || '').trim();
+  var m = s.match(/(?:err-archive|lasteekraan|err):(\d{5,})/i);
+  if (m) return m[1];
+  s = s.replace(/^tmdb:/i, '').trim();
+  if (/^\d{6,}$/.test(s)) return s;
+  return '';
 }
 
 function getTmdbTitle(tmdbId, isTv) {
@@ -73,7 +82,6 @@ function getTmdbTitle(tmdbId, isTv) {
 }
 
 function searchErr(phrase, isTv) {
-  // movie + series viewTypes both tried if first empty
   var viewTypes = isTv ? ['series', 'show', 'episode', 'movie'] : ['movie', 'series'];
   var options = {
     page: 1,
@@ -87,9 +95,7 @@ function searchErr(phrase, isTv) {
     now: 0,
     order: 1
   };
-  var qs =
-    'type=video&options=' +
-    encodeURIComponent(JSON.stringify(options));
+  var qs = 'type=video&options=' + encodeURIComponent(JSON.stringify(options));
   return fetch(ERR_API + '/api/search/getVodContents2/?' + qs, {
     headers: API_HEADERS
   })
@@ -101,8 +107,7 @@ function searchErr(phrase, isTv) {
       return res.json();
     })
     .then(function (json) {
-      var contents =
-        (json && json.video && json.video.contents) || [];
+      var contents = (json && json.video && json.video.contents) || [];
       console.log('[ERR] search hits ' + (contents && contents.length));
       return Array.isArray(contents) ? contents : [];
     })
@@ -127,7 +132,6 @@ function pickBest(contents, meta) {
     }
   }
   console.log('[ERR] best score=' + bestScore + (best ? ' id=' + best.id : ''));
-  // Accept weaker matches for Estonian partial titles
   if (best && bestScore >= 40) return String(best.id || '');
   return '';
 }
@@ -177,6 +181,17 @@ function fetchContentStreams(contentId) {
           });
         }
       }
+      if (!output.length && json.data && json.data.seasonList && json.data.seasonList.items) {
+        var seasons = json.data.seasonList.items;
+        for (var si = 0; si < seasons.length && !output.length; si++) {
+          var eps = seasons[si].contents || [];
+          for (var ei = 0; ei < eps.length; ei++) {
+            var ep = eps[ei];
+            if (!ep || !ep.id) continue;
+            return fetchContentStreams(String(ep.id));
+          }
+        }
+      }
       var seen = {};
       var uniq = [];
       for (var j = 0; j < output.length; j++) {
@@ -198,12 +213,20 @@ function getStreams(tmdbId, mediaType, seasonNum, episodeNum) {
   try {
     mediaType = mediaType || 'movie';
     var isTv = mediaType === 'tv' || mediaType === 'series';
-    var id = String(tmdbId || '').replace(/^tmdb:/i, '').trim();
+    var errId = parseErrId(tmdbId);
 
-    if (/^\d{6,}$/.test(id)) {
-      return fetchContentStreams(id);
+    if (errId) {
+      console.log('[ERR] direct contentId=' + errId);
+      return fetchContentStreams(errId);
     }
-    if (!/^\d+$/.test(id)) return Promise.resolve([]);
+
+    var id = String(tmdbId || '')
+      .replace(/^tmdb:/i, '')
+      .trim();
+    if (!/^\d+$/.test(id)) {
+      console.log('[ERR] skip unknown id: ' + tmdbId);
+      return Promise.resolve([]);
+    }
 
     return getTmdbTitle(id, isTv)
       .then(function (meta) {

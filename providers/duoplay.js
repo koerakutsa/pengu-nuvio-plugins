@@ -1,7 +1,6 @@
 /**
- * DuoPlay (Eesti) — TMDB title → tigu.kanal2.ee inventory → duoplay.ee HTML → EUDDN HLS.
- * Works best on EE/LT/LV IPs (geo-restricted CDN).
- * Hermes-safe: Promise only, no async/await.
+ * DuoPlay (Eesti) — supports duoplay:ID from static catalogs OR TMDB title match.
+ * Hermes-safe: Promise only.
  */
 var API = 'https://tigu.kanal2.ee/duoplay/ee/et';
 var SITE = 'https://duoplay.ee';
@@ -20,11 +19,6 @@ var HTML_HEADERS = {
   'User-Agent': UA,
   Referer: SITE + '/'
 };
-var PLAY_HEADERS = {
-  'User-Agent': UA,
-  Referer: SITE + '/',
-  Origin: SITE
-};
 
 function decodeHtml(value) {
   return String(value || '')
@@ -37,7 +31,7 @@ function decodeHtml(value) {
 function normTitle(s) {
   return String(s || '')
     .toLowerCase()
-    .replace(/["'«»„“]/g, '')
+    .replace(/["'«»„“']/g, '')
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -126,7 +120,6 @@ function getTmdbMeta(tmdbId, isTv) {
   });
 }
 
-/** Search is often 204 from some networks — fall back to list pages + score. */
 function findDuoId(meta, isTv) {
   var queries = [];
   if (meta.title) queries.push(meta.title);
@@ -182,7 +175,7 @@ function findDuoId(meta, isTv) {
         }
       }
       if (best && bestScore >= 55) {
-        console.log('[DuoPlay] list match score=' + bestScore + ' id=' + best.id + ' "' + best.title + '"');
+        console.log('[DuoPlay] list match score=' + bestScore + ' id=' + best.id);
         return String(best.id);
       }
       console.log('[DuoPlay] no match (best=' + bestScore + ')');
@@ -222,71 +215,90 @@ function registerSession(manifestUrl) {
     });
 }
 
+function streamFromDuoId(duoId) {
+  var path = '/' + duoId;
+  return fetchHtml(path).then(function (html) {
+    if (!html) {
+      console.log('[DuoPlay] empty HTML');
+      return [];
+    }
+    var manifest = extractStreamUrl(html);
+    if (!manifest) {
+      console.log('[DuoPlay] no m3u8 in HTML');
+      return [];
+    }
+    if (manifest.indexOf('http') !== 0) {
+      manifest = 'https://' + manifest.replace(/^\/\//, '');
+    }
+    console.log('[DuoPlay] manifest ok');
+    return registerSession(manifest).then(function (signed) {
+      var playUrl = signed || manifest;
+      var title = pageTitle(html);
+      return [
+        {
+          name: 'DuoPlay · HLS',
+          title: title + ' · DuoPlay · EE',
+          url: playUrl,
+          quality: '1080p',
+          size: 'Unknown',
+          headers: {
+            'User-Agent': UA,
+            Referer: SITE + '/',
+            Origin: SITE
+          },
+          provider: 'duoplay',
+          sourceType: 'hls'
+        }
+      ];
+    });
+  });
+}
+
+function parseId(raw) {
+  var s = String(raw || '').trim();
+  var m = s.match(/duoplay:(\d+)/i);
+  if (m) return { kind: 'duo', id: m[1] };
+  s = s.replace(/^tmdb:/i, '').trim();
+  if (/^\d+$/.test(s)) return { kind: 'tmdb', id: s };
+  return { kind: 'none', id: '' };
+}
+
 function getStreams(tmdbId, mediaType, seasonNum, episodeNum) {
   console.log('[DuoPlay] getStreams', tmdbId, mediaType, seasonNum, episodeNum);
   try {
     mediaType = mediaType || 'movie';
     var isTv = mediaType === 'tv' || mediaType === 'series';
-    var id = String(tmdbId || '').replace(/^tmdb:/i, '').trim();
-    if (!/^\d+$/.test(id)) {
-      console.log('[DuoPlay] expected TMDB id, got: ' + id);
+    var parsed = parseId(tmdbId);
+
+    if (parsed.kind === 'duo') {
+      console.log('[DuoPlay] direct id=' + parsed.id);
+      return streamFromDuoId(parsed.id).catch(function (err) {
+        console.log('[DuoPlay] error: ' + (err && err.message ? err.message : err));
+        return [];
+      });
+    }
+
+    if (parsed.kind !== 'tmdb') {
+      console.log('[DuoPlay] skip non-tmdb/non-duo id: ' + tmdbId);
       return Promise.resolve([]);
     }
 
-    return getTmdbMeta(id, isTv).then(function (meta) {
-      if (!meta || !meta.title) {
-        console.log('[DuoPlay] TMDB miss');
-        return [];
-      }
-      console.log('[DuoPlay] title=' + meta.title);
-
-      return findDuoId(meta, isTv).then(function (duoId) {
-        if (!duoId) return [];
-
-        var path = '/' + duoId;
-        // Episodes: DuoPlay uses ?ep=<episode_id> (internal), not S/E numbers.
-        // For series we still open the telecast page; default episode is on page.
-        return fetchHtml(path).then(function (html) {
-          if (!html) {
-            console.log('[DuoPlay] empty HTML');
-            return [];
-          }
-          var manifest = extractStreamUrl(html);
-          if (!manifest) {
-            console.log('[DuoPlay] no m3u8 in HTML');
-            return [];
-          }
-          if (manifest.indexOf('http') !== 0) {
-            manifest = 'https://' + manifest.replace(/^\/\//, '');
-          }
-          console.log('[DuoPlay] manifest ok');
-
-          return registerSession(manifest).then(function (signed) {
-            var playUrl = signed || manifest;
-            var title = pageTitle(html);
-            return [
-              {
-                name: 'DuoPlay · HLS',
-                title: title + ' · DuoPlay · EE',
-                url: playUrl,
-                quality: '1080p',
-                size: 'Unknown',
-                headers: {
-                  'User-Agent': UA,
-                  Referer: SITE + '/',
-                  Origin: SITE
-                },
-                provider: 'duoplay',
-                sourceType: 'hls'
-              }
-            ];
-          });
+    return getTmdbMeta(parsed.id, isTv)
+      .then(function (meta) {
+        if (!meta || !meta.title) {
+          console.log('[DuoPlay] TMDB miss');
+          return [];
+        }
+        console.log('[DuoPlay] title=' + meta.title);
+        return findDuoId(meta, isTv).then(function (duoId) {
+          if (!duoId) return [];
+          return streamFromDuoId(duoId);
         });
+      })
+      .catch(function (err) {
+        console.log('[DuoPlay] error: ' + (err && err.message ? err.message : err));
+        return [];
       });
-    }).catch(function (err) {
-      console.log('[DuoPlay] error: ' + (err && err.message ? err.message : err));
-      return [];
-    });
   } catch (err) {
     console.log('[DuoPlay] sync error: ' + (err && err.message ? err.message : err));
     return Promise.resolve([]);
