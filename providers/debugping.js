@@ -1,9 +1,13 @@
 /**
- * DebugPing — always returns one fake stream that shows the received ID.
+ * DebugPing — always returns one stream so we can see if TV invokes plugins.
  */
 function getStreams(tmdbId, mediaType, seasonNum, episodeNum) {
-  var label = 'ID=' + String(tmdbId) + ' type=' + String(mediaType) +
-    ' S' + String(seasonNum) + 'E' + String(episodeNum);
+  var id = String(tmdbId == null ? '' : tmdbId);
+  var label =
+    'PING id=' + id +
+    ' type=' + String(mediaType) +
+    ' S' + String(seasonNum) +
+    'E' + String(episodeNum);
   console.log('[DebugPing]', label);
   return Promise.resolve([
     {
