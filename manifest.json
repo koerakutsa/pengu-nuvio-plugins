@@ -1,6 +1,6 @@
 {
   "name": "PenguStream Ultra Plugins",
-  "version": "1.5.9",
+  "version": "1.6.0",
   "scrapers": [
     {
       "id": "debugping",
@@ -18,7 +18,7 @@
       "id": "duoplay",
       "name": "DuoPlay",
       "description": "duoplay:ID + episodes (syntax fixed)",
-      "version": "1.3.1",
+      "version": "1.3.2",
       "author": "PenguStream",
       "supportedTypes": ["movie", "tv", "series"],
       "filename": "providers/duoplay.js",
@@ -30,7 +30,7 @@
       "id": "err-jupiter",
       "name": "ERR Jupiter",
       "description": "err:/lasteekraan: direct ID + TMDB",
-      "version": "1.2.0",
+      "version": "1.2.1",
       "author": "PenguStream",
       "supportedTypes": ["movie", "tv", "series"],
       "filename": "providers/err-jupiter.js",

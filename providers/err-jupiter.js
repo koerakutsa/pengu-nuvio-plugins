@@ -3,6 +3,7 @@
  * Promise only. Nested seasonList + season/episode resolve.
  */
 var ERR_API = 'https://services.err.ee';
+var CATALOG_STREAMS = 'https://raw.githubusercontent.com/koerakutsa/pengu-catalogs/main/stream/';
 var TMDB_KEY = '439c478a771f35c05022f9feabcca01c';
 var ROOT_CAT = 3905;
 var API_HEADERS = {
@@ -64,6 +65,26 @@ function parseErrId(raw) {
   s = s.replace(/^(?:tmdb(?::(?:tv|movie))?):/i, '').trim();
   if (/^\d{5,}$/.test(s)) return s;
   return '';
+}
+function githubStreams(rawId, mediaType) {
+  var id = String(rawId || '').replace(/\.json$/i, '').trim();
+  if (!/^(?:err|err-archive|lasteekraan):\d+$/i.test(id)) return Promise.resolve([]);
+  var type = mediaType === 'movie' ? 'movie' : 'series';
+  return fetch(CATALOG_STREAMS + type + '/' + encodeURIComponent(id) + '.json')
+    .then(function (res) { return res && res.ok ? res.json() : null; })
+    .then(function (data) {
+      var rows = data && Array.isArray(data.streams) ? data.streams : [];
+      return rows.filter(function (row) { return row && /^https?:\/\//i.test(row.url || ''); })
+        .map(function (row) {
+          return {
+            name: row.name || 'ERR', title: row.title || 'ERR · HLS',
+            url: row.url, quality: 'Auto', provider: 'err-jupiter',
+            sourceType: /\.m3u8(?:\?|$)/i.test(row.url) ? 'hls' : 'video',
+            headers: row.behaviorHints && row.behaviorHints.proxyHeaders
+              ? row.behaviorHints.proxyHeaders.request || {} : {}
+          };
+        });
+    }).catch(function () { return []; });
 }
 
 function getTmdbTitle(tmdbId, isTv) {
@@ -274,7 +295,9 @@ function getStreams(tmdbId, mediaType, seasonNum, episodeNum) {
 
     if (errId) {
       console.log('[ERR] direct contentId=' + errId);
-      return fetchContentStreams(errId, seasonNum, episodeNum);
+      return githubStreams(tmdbId, mediaType).then(function (streams) {
+        return streams.length ? streams : fetchContentStreams(errId, seasonNum, episodeNum);
+      });
     }
 
     var id = String(tmdbId || '')

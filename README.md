@@ -8,7 +8,8 @@ https://raw.githubusercontent.com/koerakutsa/pengu-catalogs/main/manifest.json
 
 Nuvio Android TV ei käivita kohalikke JS pluginaid `duoplay:`, `err:` ega
 `lasteekraan:` ID-dega. Eesti kataloogi addon avaldab seetõttu streami vastused
-otse. Allolevad pluginad on valikulised teiste kataloogide jaoks.
+otse. DuoPlay ja ERR pluginad proovivad kohandatud ID puhul esmalt GitHubi
+`stream/` faili ning kasutavad vajaduse korral lähte-API-d varuvariandina.
 
 ## Install
 

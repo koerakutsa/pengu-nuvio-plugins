@@ -3,6 +3,7 @@
  */
 var API = 'https://tigu.kanal2.ee/duoplay/ee/et';
 var SITE = 'https://duoplay.ee';
+var CATALOG_STREAMS = 'https://raw.githubusercontent.com/koerakutsa/pengu-catalogs/main/stream/';
 var TMDB_KEY = '439c478a771f35c05022f9feabcca01c';
 var UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36';
 var JSON_HEADERS = { Accept: 'application/json', 'User-Agent': UA, Referer: SITE + '/', Origin: SITE };
@@ -68,6 +69,23 @@ function fetchHtml(path) {
     if (!res || !res.ok) return '';
     return res.text();
   }).catch(function () { return ''; });
+}
+function githubStreams(id, mediaType) {
+  var type = mediaType === 'movie' ? 'movie' : 'series';
+  return fetch(CATALOG_STREAMS + type + '/' + encodeURIComponent(id) + '.json')
+    .then(function (res) { return res && res.ok ? res.json() : null; })
+    .then(function (data) {
+      var rows = data && Array.isArray(data.streams) ? data.streams : [];
+      return rows.filter(function (row) { return row && /^https?:\/\//i.test(row.url || ''); })
+        .map(function (row) {
+          return {
+            name: row.name || 'DuoPlay', title: row.title || 'DuoPlay · HLS',
+            url: row.url, quality: 'Auto', provider: 'duoplay', sourceType: 'hls',
+            headers: row.behaviorHints && row.behaviorHints.proxyHeaders
+              ? row.behaviorHints.proxyHeaders.request || {} : {}
+          };
+        });
+    }).catch(function () { return []; });
 }
 function getTmdbMeta(tmdbId, isTv) {
   return fetchJson('https://api.themoviedb.org/3/' + (isTv ? 'tv' : 'movie') + '/' + tmdbId + '?api_key=' + TMDB_KEY).then(function (data) {
@@ -221,7 +239,10 @@ function getStreams(tmdbId, mediaType, seasonNum, episodeNum) {
 
     if (parsed.kind === 'duo') {
       var ep = parsed.ep || epFromArgs;
-      return streamFromDuoId(parsed.id, ep).catch(function (err) {
+      var catalogId = 'duoplay:' + parsed.id + (ep ? ':ep:' + ep : '');
+      return githubStreams(catalogId, mediaType).then(function (streams) {
+        return streams.length ? streams : streamFromDuoId(parsed.id, ep);
+      }).catch(function (err) {
         console.log('[DuoPlay] error: ' + (err && err.message ? err.message : err));
         return [];
       });
