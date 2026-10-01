@@ -23,8 +23,16 @@ https://raw.githubusercontent.com/koerakutsa/pengu-nuvio-plugins/main/manifest.j
 |----------|--------|
 | **VidZee** | Very fast (tik / Hindi) |
 | **Vidrock** | Very fast (Atlas ≈ VidZee CDN) |
-| **Videasy** | Multi-quality HLS (cdn / hdmovie) — replaces MovieBlast |
+| **Vixsrc** | API and HLS playlist |
 | PlayIMDb | Backup, slower CDN |
+| DuoPlay | Eesti saated ja filmid |
+| ERR Jupiter | ERRi saated ja filmid |
+
+Videasy, VidSrcME, VidLink ja MovieBlast jäävad manifesti, kuid on vaikimisi
+välja lülitatud. Videasy teenus suleti, VidSrcME krüptimise versioon muutus,
+VidLinki voolingid vastasid kontrollis HTTP 429-ga ning MovieBlasti voohosti
+domeen ei lahene enam. Vanad MP4Hydra ja M4uHD skriptid on repos alles, kuid
+neid ei laadita manifestist (M4uHD vajab WebAssembly tuge).
 
 DebugPing on vaikimisi välja lülitatud, sest selle testvideo ei ole kataloogi
 saate voog. Värskenda pluginad Nuvios pärast uuendusi.
