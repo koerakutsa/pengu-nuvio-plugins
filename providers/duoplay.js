@@ -87,7 +87,7 @@ function githubStreams(id, mediaType) {
               return sub && /^https:\/\//i.test(sub.url || '');
             }).map(function (sub) {
               return { url: sub.url, language: sub.lang === 'est' ? 'et' : sub.lang,
-                name: sub.lang === 'est' ? 'Eesti' : (sub.lang || 'Subtitles') };
+                name: sub.lang === 'est' ? 'Eesti (GitHub)' : (sub.lang || 'Subtitles') };
             })
           };
         });
