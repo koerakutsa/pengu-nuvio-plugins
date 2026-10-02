@@ -82,7 +82,13 @@ function githubStreams(id, mediaType) {
             name: row.name || 'DuoPlay', title: row.title || 'DuoPlay · HLS',
             url: row.url, quality: 'Auto', provider: 'duoplay', sourceType: 'hls',
             headers: row.behaviorHints && row.behaviorHints.proxyHeaders
-              ? row.behaviorHints.proxyHeaders.request || {} : {}
+              ? row.behaviorHints.proxyHeaders.request || {} : {},
+            subtitles: (row.subtitles || []).filter(function (sub) {
+              return sub && /^https:\/\//i.test(sub.url || '');
+            }).map(function (sub) {
+              return { url: sub.url, language: sub.lang === 'est' ? 'et' : sub.lang,
+                name: sub.lang === 'est' ? 'Eesti' : (sub.lang || 'Subtitles') };
+            })
           };
         });
     }).catch(function () { return []; });

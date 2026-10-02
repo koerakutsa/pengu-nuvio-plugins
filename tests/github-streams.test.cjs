@@ -18,6 +18,7 @@ for (const entry of [
           ok: true,
           json: async () => ({ streams: [{
             name: 'GitHub', title: 'Fixture', url: 'https://media.example/master.m3u8',
+            subtitles: [{ id: 'et', lang: 'est', url: 'https://media.example/subtitles.vtt' }],
             behaviorHints: { proxyHeaders: { request: { Referer: 'https://example.com/' } } },
           }] }),
         };
@@ -28,6 +29,10 @@ for (const entry of [
     assert.equal(streams.length, 1);
     assert.equal(streams[0].url, 'https://media.example/master.m3u8');
     assert.equal(streams[0].headers.Referer, 'https://example.com/');
+    if (entry.file === 'duoplay.js') {
+      assert.equal(streams[0].subtitles[0].url, 'https://media.example/subtitles.vtt');
+      assert.equal(streams[0].subtitles[0].language, 'et');
+    }
     assert.equal(calls.length, 1);
     assert.match(calls[0], /raw\.githubusercontent\.com\/koerakutsa\/pengu-catalogs\/main\/stream\//);
   });
