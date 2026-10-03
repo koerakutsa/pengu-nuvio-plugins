@@ -19,7 +19,7 @@ for (const entry of [
           json: async () => ({ streams: [{
             name: 'GitHub', title: 'Fixture', url: 'https://media.example/master.m3u8',
             subtitles: [{ id: 'et', lang: 'est', url: 'https://media.example/subtitles.vtt' }],
-            behaviorHints: { proxyHeaders: { request: { Referer: 'https://example.com/' } } },
+            behaviorHints: { proxyHeaders: { request: { Referer: 'https://example.com/', Origin: 'https://example.com' } } },
           }] }),
         };
       },
@@ -29,6 +29,7 @@ for (const entry of [
     assert.equal(streams.length, 1);
     assert.equal(streams[0].url, 'https://media.example/master.m3u8');
     assert.equal(streams[0].headers.Referer, 'https://example.com/');
+    if (entry.file === 'duoplay.js') assert.equal(streams[0].headers.Origin, undefined);
     if (entry.file === 'duoplay.js') {
       assert.equal(streams[0].subtitles[0].url, 'https://media.example/subtitles.vtt');
       assert.equal(streams[0].subtitles[0].language, 'et');

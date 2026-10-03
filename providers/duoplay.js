@@ -70,6 +70,13 @@ function fetchHtml(path) {
     return res.text();
   }).catch(function () { return ''; });
 }
+function playbackHeaders(source) {
+  var out = {};
+  Object.keys(source || {}).forEach(function (key) {
+    if (key.toLowerCase() !== 'origin') out[key] = source[key];
+  });
+  return out;
+}
 function githubStreams(id, mediaType) {
   var type = mediaType === 'movie' ? 'movie' : 'series';
   return fetch(CATALOG_STREAMS + type + '/' + encodeURIComponent(id) + '.json')
@@ -81,8 +88,8 @@ function githubStreams(id, mediaType) {
           return {
             name: row.name || 'DuoPlay', title: row.title || 'DuoPlay · HLS',
             url: row.url, quality: 'Auto', provider: 'duoplay', sourceType: 'hls',
-            headers: row.behaviorHints && row.behaviorHints.proxyHeaders
-              ? row.behaviorHints.proxyHeaders.request || {} : {},
+            headers: playbackHeaders(row.behaviorHints && row.behaviorHints.proxyHeaders
+              ? row.behaviorHints.proxyHeaders.request || {} : {}),
             subtitles: (row.subtitles || []).filter(function (sub) {
               return sub && /^https:\/\//i.test(sub.url || '');
             }).map(function (sub) {
@@ -198,7 +205,7 @@ function streamFromDuoId(duoId, epNum) {
           url: signed || manifest,
           quality: '1080p',
           size: 'Unknown',
-          headers: { 'User-Agent': UA, Referer: SITE + '/', Origin: SITE },
+          headers: { 'User-Agent': UA, Referer: SITE + '/' },
           provider: 'duoplay',
           sourceType: 'hls'
         }
